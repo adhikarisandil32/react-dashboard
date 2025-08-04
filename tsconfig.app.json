@@ -21,7 +21,14 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Path Config */
+    "baseUrl": ".",
+    "paths": {
+      "@root/*": ["./*"],
+      "src/*": ["./src/*"]
+    }
   },
   "include": ["src"]
 }
