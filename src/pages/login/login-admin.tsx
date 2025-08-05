@@ -1,29 +1,52 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { config } from '@root/src/config/config';
+import { useAuthStore } from '@root/src/stores/auth-store';
+import { ErrorCross } from '@root/src/svgs/error-cross';
+import { setLocalStorage } from '@root/src/utils/local-storage';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router';
+import { adminUsers } from 'src/json-data/users.json';
 
 export default function LoginPageAdmin() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
+
+  const { setAuth } = useAuthStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError("");
+    setError('');
 
-    // Simulate login process
     try {
-      // In a real app, you would make an API call here
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // For demo purposes only - would be replaced with actual authentication
       if (email && password) {
+        const admin = adminUsers.find((admin) => admin.email === email);
+        if (!admin) {
+          setError("email or password doesn't match");
+          return;
+        }
+
+        if (admin?.password !== password) {
+          setError("email or password doesn't match");
+          return;
+        }
+
+        const authData = {
+          email: admin.email,
+          role: admin.role as 'user' | 'admin',
+        };
+
+        setLocalStorage(config.authKey, JSON.stringify(authData));
+        setAuth(authData);
+        navigate('/admin');
       } else {
-        setError("Please enter both email and password");
+        setError('Please enter both email and password');
       }
     } catch (err) {
-      setError("An error occurred during login");
+      setError('An error occurred during login');
     } finally {
       setIsLoading(false);
     }
@@ -39,15 +62,22 @@ export default function LoginPageAdmin() {
             to="/"
             className="inline-block"
           >
-            <span className="text-3xl font-bold text-indigo-600">Awwwsome.</span>
+            <span className="text-3xl font-bold text-indigo-600">
+              Awwwsome.
+            </span>
           </Link>
         </div>
 
         <div className="bg-white py-8 px-6 shadow-sm rounded-lg">
-          <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">Admin User Login</h2>
+          <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">
+            Admin User Login
+          </h2>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-md text-sm">{error}</div>
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-md text-sm space-x-1">
+              <ErrorCross />
+              <span>{error}</span>
+            </div>
           )}
 
           <form
@@ -101,14 +131,15 @@ export default function LoginPageAdmin() {
                   disabled={isLoading}
                   className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  {isLoading ? "Logging in..." : "Log in"}
+                  {isLoading ? 'Logging in...' : 'Log in'}
                 </button>
               </div>
 
               <div className="text-center">
                 <button
                   className="py-2 rounded-md border-indigo-700 border w-full cursor-pointer"
-                  onClick={() => navigate("/login/user", { replace: true })}
+                  type="button"
+                  onClick={() => navigate('/login/user', { replace: true })}
                 >
                   Switch to Public Login
                 </button>
