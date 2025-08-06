@@ -3,12 +3,12 @@ import HomePage from './pages/home-page';
 import LoginPageAdmin from './pages/login/login-admin';
 import LoginPageUser from './pages/login/login-user';
 import LoginPage from './pages/login';
+import NotFound from './pages/not-found';
 import {
   AdminProtectedRoutes,
   NonAuthenticatedRoutes,
   PublicProtectedRoutes,
-} from './components/protected-routes';
-import NotFound from './pages/not-found';
+} from './components/page-wise/protected-routes';
 
 const router = createBrowserRouter([
   {
