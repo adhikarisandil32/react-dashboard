@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router';
-import { useAuthStore } from 'src/stores/auth-store';
 import NoPermissionComponent from './no-permission';
+import { useAuthStore } from '@src/stores/auth-store';
 
 export function NonAuthenticatedRoutes({
   children,
