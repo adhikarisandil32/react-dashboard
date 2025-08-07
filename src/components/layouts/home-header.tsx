@@ -1,5 +1,5 @@
 import { BurgerIcon } from '@src/svgs/burger-icon';
-import ProfileMenu from './profile-menu';
+import ProfileMenu from '../commons/profile-menu';
 import { useMediaQuery } from 'usehooks-ts';
 import { useAppStyles } from '@src/stores/styles-store';
 
