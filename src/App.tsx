@@ -8,7 +8,7 @@ import {
   AdminProtectedRoutes,
   NonAuthenticatedRoutes,
   PublicProtectedRoutes,
-} from './components/page-wise/protected-routes';
+} from './components/commons/protected-routes';
 
 const router = createBrowserRouter([
   {
