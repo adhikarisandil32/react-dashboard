@@ -1,5 +1,5 @@
-import Footer from '@src/components/commons/footer';
-import Header from '@src/components/commons/header';
+import Footer from '@src/components/layouts/home-footer';
+import Header from '@src/components/layouts/home-header';
 import BlogsSection from '@src/components/page-wise/home-page/blog-section';
 import HeroSection from '@src/components/page-wise/home-page/hero-section';
 import OurWorksSection from '@src/components/page-wise/home-page/our-works-section';
