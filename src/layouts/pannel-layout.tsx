@@ -8,6 +8,8 @@ interface IPannelContext {
   isMobileScreen: boolean;
   isMenuExpanded: boolean;
   setIsMenuExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  isMobilePannelOpen: boolean;
+  setIsMobilePannelOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PannelContext = createContext<IPannelContext | null>(null);
@@ -29,23 +31,31 @@ export default function PannelLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isMenuExpanded, setIsMenuExpanded] = useState<boolean>(false);
+  const [isMenuExpanded, setIsMenuExpanded] = useState<boolean>(true);
   const { styles } = useAppStyles();
   const isMobileScreen = useMediaQuery(
     `(max-width: ${styles.getPropertyValue('--breakpoint-md')})`
   );
 
+  const [isMobilePannelOpen, setIsMobilePannelOpen] = useState<boolean>(false);
+
   return (
     <PannelContext.Provider
-      value={{ isMenuExpanded, setIsMenuExpanded, isMobileScreen }}
+      value={{
+        isMenuExpanded,
+        setIsMenuExpanded,
+        isMobileScreen,
+        isMobilePannelOpen,
+        setIsMobilePannelOpen,
+      }}
     >
       <div className="flex">
-        <div>
-          <PannelSidebar />
-        </div>
+        <PannelSidebar>
+          <></>
+        </PannelSidebar>
 
         <div className="space-y-4 p-3 w-full">
-          <div className="border-2 border-black">
+          <div className="border border-black">
             <PannelHeader />
           </div>
 
