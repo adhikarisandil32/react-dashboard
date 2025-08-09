@@ -34,7 +34,7 @@ export default function PannelLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(false);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(true);
   const { styles } = useAppStyles();
   const isMobileScreen = useMediaQuery(
     `(max-width: ${styles.getPropertyValue('--breakpoint-md')})`
@@ -59,15 +59,15 @@ export default function PannelLayout({
         collapsedScrollableSidebarWidth,
       }}
     >
-      <div className="flex">
-        <PannelSidebar>
-          <></>
-        </PannelSidebar>
+      <div className="flex h-screen">
+        <div>
+          <PannelSidebar>
+            <></>
+          </PannelSidebar>
+        </div>
 
-        <div className="space-y-4 p-3 w-full">
-          <div className="border border-black">
-            <PannelHeader />
-          </div>
+        <div className="space-y-4 p-3 w-full overflow-y-auto">
+          <PannelHeader />
 
           <div>{children}</div>
         </div>
