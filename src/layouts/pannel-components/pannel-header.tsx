@@ -55,8 +55,6 @@ export default function PannelHeader() {
           )}
         </div>
       )}
-
-      <div>This is pannel header</div>
     </div>
   );
 }
