@@ -6,10 +6,13 @@ import { useAppStyles } from '@src/stores/styles-store';
 
 interface IPannelContext {
   isMobileScreen: boolean;
-  isMenuExpanded: boolean;
-  setIsMenuExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  isSidebarExpanded: boolean;
+  setIsSidebarExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   isMobilePannelOpen: boolean;
   setIsMobilePannelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  expandedSidebarWidth: string;
+  collapsedSidebarWidth: string;
+  collapsedScrollableSidebarWidth: string;
 }
 
 const PannelContext = createContext<IPannelContext | null>(null);
@@ -31,7 +34,7 @@ export default function PannelLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isMenuExpanded, setIsMenuExpanded] = useState<boolean>(true);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(false);
   const { styles } = useAppStyles();
   const isMobileScreen = useMediaQuery(
     `(max-width: ${styles.getPropertyValue('--breakpoint-md')})`
@@ -39,14 +42,21 @@ export default function PannelLayout({
 
   const [isMobilePannelOpen, setIsMobilePannelOpen] = useState<boolean>(false);
 
+  const expandedSidebarWidth = '20rem';
+  const collapsedSidebarWidth = '5.5rem';
+  const collapsedScrollableSidebarWidth = '7.5rem';
+
   return (
     <PannelContext.Provider
       value={{
-        isMenuExpanded,
-        setIsMenuExpanded,
+        isSidebarExpanded,
+        setIsSidebarExpanded,
         isMobileScreen,
         isMobilePannelOpen,
         setIsMobilePannelOpen,
+        expandedSidebarWidth,
+        collapsedSidebarWidth,
+        collapsedScrollableSidebarWidth,
       }}
     >
       <div className="flex">
