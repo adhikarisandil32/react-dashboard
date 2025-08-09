@@ -4,29 +4,29 @@ import { usePannelContext } from '../pannel-layout';
 export default function PannelHeader() {
   const {
     isMobileScreen,
-    isMenuExpanded,
     isMobilePannelOpen,
     setIsMobilePannelOpen,
-    setIsMenuExpanded,
+    isSidebarExpanded,
+    setIsSidebarExpanded,
   } = usePannelContext();
 
   return (
     <div className="flex gap-2">
       {!isMobileScreen && (
         <div>
-          {!isMenuExpanded && (
+          {!isSidebarExpanded && (
             <button
               className="cursor-pointer"
-              onClick={() => setIsMenuExpanded(true)}
+              onClick={() => setIsSidebarExpanded(true)}
             >
               <PanelLeftOpen />
             </button>
           )}
 
-          {isMenuExpanded && (
+          {isSidebarExpanded && (
             <button
               className="cursor-pointer"
-              onClick={() => setIsMenuExpanded(false)}
+              onClick={() => setIsSidebarExpanded(false)}
             >
               <PanelLeftClose />
             </button>
