@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router';
-import { useAuthStore } from 'src/stores/auth-store';
-import NoPermissionComponent from './no-permission';
+import NoPermissionComponent from '../no-permission';
+import { useAuthStore } from '@src/stores/auth-store';
+import PannelLayout from '@src/layouts/pannel-layout';
 
 export function NonAuthenticatedRoutes({
   children,
@@ -24,10 +25,14 @@ export function AdminProtectedRoutes({
   const { auth } = useAuthStore();
 
   if (!auth || (auth && auth.role !== 'admin')) {
-    return <NoPermissionComponent />;
+    return (
+      <PannelLayout>
+        <NoPermissionComponent />
+      </PannelLayout>
+    );
   }
 
-  return <>{children}</>;
+  return <PannelLayout>{children}</PannelLayout>;
 }
 
 export function PublicProtectedRoutes({
@@ -38,8 +43,12 @@ export function PublicProtectedRoutes({
   const { auth } = useAuthStore();
 
   if (!auth || (auth && auth.role !== 'user')) {
-    return <NoPermissionComponent />;
+    return (
+      <PannelLayout>
+        <NoPermissionComponent />
+      </PannelLayout>
+    );
   }
 
-  return <>{children}</>;
+  return <PannelLayout>{children}</PannelLayout>;
 }

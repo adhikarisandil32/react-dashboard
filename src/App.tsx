@@ -3,12 +3,15 @@ import HomePage from './pages/home-page';
 import LoginPageAdmin from './pages/login/login-admin';
 import LoginPageUser from './pages/login/login-user';
 import LoginPage from './pages/login';
+import NotFound from './pages/not-found';
 import {
   AdminProtectedRoutes,
   NonAuthenticatedRoutes,
   PublicProtectedRoutes,
-} from './components/protected-routes';
-import NotFound from './pages/not-found';
+} from './components/commons/protected-routes';
+import AdminPage from './pages/admin';
+import UserPage from './pages/user';
+import AdminEcommerceDashboard from './pages/admin/dashboard';
 
 const router = createBrowserRouter([
   {
@@ -47,19 +50,47 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin',
-    element: (
-      <AdminProtectedRoutes>
-        <></>
-      </AdminProtectedRoutes>
-    ),
+    element: <AdminPage />,
+    children: [
+      {
+        index: true,
+        element: (
+          <AdminProtectedRoutes>
+            <NotFound />
+          </AdminProtectedRoutes>
+        ),
+      },
+      {
+        path: 'dashboard',
+        element: (
+          <AdminProtectedRoutes>
+            <AdminEcommerceDashboard />
+          </AdminProtectedRoutes>
+        ),
+      },
+    ],
   },
   {
     path: '/user',
-    element: (
-      <PublicProtectedRoutes>
-        <></>
-      </PublicProtectedRoutes>
-    ),
+    element: <UserPage />,
+    children: [
+      {
+        index: true,
+        element: (
+          <PublicProtectedRoutes>
+            <NotFound />
+          </PublicProtectedRoutes>
+        ),
+      },
+      {
+        path: 'dashboard',
+        element: (
+          <PublicProtectedRoutes>
+            <></>
+          </PublicProtectedRoutes>
+        ),
+      },
+    ],
   },
   {
     path: '*',

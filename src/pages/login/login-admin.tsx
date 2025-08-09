@@ -1,10 +1,10 @@
-import { config } from '@root/src/config/config';
-import { useAuthStore } from '@root/src/stores/auth-store';
-import { ErrorCross } from '@root/src/svgs/error-cross';
-import { setLocalStorage } from '@root/src/utils/local-storage';
+import { config } from '@src/config/config';
+import { useAuthStore } from '@src/stores/auth-store';
+import { ErrorCross } from '@src/svgs/error-cross';
+import { setLocalStorage } from '@src/utils/local-storage';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { adminUsers } from 'src/json-data/users.json';
+import { adminUsers } from '@src/json-data/users.json';
 
 export default function LoginPageAdmin() {
   const [email, setEmail] = useState('');
