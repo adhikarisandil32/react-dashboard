@@ -1,39 +1,42 @@
 import { ChevronsUpDown } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useEffect, useState } from 'react';
 import { usePannelContext } from '../pannel-layout';
-import { ScrollArea, ScrollBar } from '@src/components/ui/scroll-area';
+import { useEffect, useRef, useState } from 'react';
 
 /* Sidebar for desktop */
 function PannelSidebarDesktop({ children }: { children: React.ReactNode }) {
-  const { isMenuExpanded, isMobileScreen } = usePannelContext();
+  const {
+    isSidebarExpanded,
+    expandedSidebarWidth,
+    collapsedSidebarWidth,
+    collapsedScrollableSidebarWidth,
+  } = usePannelContext();
 
-  const [isSidebarFullLength, setIsSidebarFullLength] =
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  const [isSidebarMenuOverflowing, setIsSidebarMenuOverflowing] =
     useState<boolean>(false);
 
   useEffect(() => {
-    if (isMobileScreen) {
-      setIsSidebarFullLength(true);
-      return;
-    }
+    if (!menuRef.current) return;
 
-    if (!isMobileScreen && isMenuExpanded) {
-      setIsSidebarFullLength(true);
-      return;
+    if (menuRef.current?.scrollHeight > menuRef.current?.clientHeight) {
+      setIsSidebarMenuOverflowing(true);
     }
-
-    setIsSidebarFullLength(false);
-    return;
-  }, [isMenuExpanded, isMobileScreen]);
+  }, []);
 
   return (
     <div>
       <div
         className="h-screen bg-gray-900 space-y-4 p-4 text-gray-200 transition-[width] duration-300"
         style={{
-          width: isSidebarFullLength ? '20rem' : '5.5rem',
+          width: isSidebarExpanded
+            ? expandedSidebarWidth
+            : isSidebarMenuOverflowing
+            ? collapsedScrollableSidebarWidth
+            : collapsedSidebarWidth,
         }}
-        data-expanded={isSidebarFullLength}
+        data-expanded={isSidebarExpanded}
       >
         <div className="min-h-12 flex items-center justify-between cursor-pointer rounded-md p-1 px-2 hover:bg-gray-800">
           <div className="flex items-center gap-2">
@@ -42,7 +45,7 @@ function PannelSidebarDesktop({ children }: { children: React.ReactNode }) {
             </div>
 
             <AnimatePresence>
-              {isSidebarFullLength && (
+              {isSidebarExpanded && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -57,7 +60,7 @@ function PannelSidebarDesktop({ children }: { children: React.ReactNode }) {
           </div>
 
           <AnimatePresence>
-            {isSidebarFullLength && (
+            {isSidebarExpanded && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -73,7 +76,7 @@ function PannelSidebarDesktop({ children }: { children: React.ReactNode }) {
         <div className="space-y-1.5">
           <div className="h-5">
             <AnimatePresence>
-              {isSidebarFullLength && (
+              {isSidebarExpanded && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -88,7 +91,10 @@ function PannelSidebarDesktop({ children }: { children: React.ReactNode }) {
             </AnimatePresence>
           </div>
 
-          <div className="h-[calc(100vh-124px)] overflow-y-auto">
+          <div
+            className="h-[calc(100vh-124px)] overflow-y-auto"
+            ref={menuRef}
+          >
             {children}
           </div>
         </div>
@@ -99,7 +105,8 @@ function PannelSidebarDesktop({ children }: { children: React.ReactNode }) {
 
 /* Sidebar for mobile */
 function PannelSidebarMobile({ children }: { children: React.ReactNode }) {
-  const { isMobilePannelOpen, setIsMobilePannelOpen } = usePannelContext();
+  const { isMobilePannelOpen, setIsMobilePannelOpen, expandedSidebarWidth } =
+    usePannelContext();
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -119,7 +126,7 @@ function PannelSidebarMobile({ children }: { children: React.ReactNode }) {
           <motion.div
             className="h-screen fixed z-[100]  top-0 left-0 bg-gray-900 text-gray-200 transition-[width] duration-300"
             style={{
-              width: '20rem',
+              width: expandedSidebarWidth,
             }}
             initial={{ x: '-100%' }}
             animate={{ x: '0' }}
@@ -152,13 +159,7 @@ function PannelSidebarMobile({ children }: { children: React.ReactNode }) {
                 </div>
 
                 <div className="h-[calc(100vh-124px)] overflow-y-auto">
-                  {/* {children} */}
-
-                  <ScrollArea className="h-48 border-2 border-red-200">
-                    <div className="min-h-screen"></div>
-
-                    <ScrollBar />
-                  </ScrollArea>
+                  {children}
                 </div>
               </div>
             </div>
