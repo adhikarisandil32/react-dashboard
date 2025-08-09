@@ -9,6 +9,9 @@ import {
   NonAuthenticatedRoutes,
   PublicProtectedRoutes,
 } from './components/commons/protected-routes';
+import AdminPage from './pages/admin';
+import UserPage from './pages/user';
+import AdminEcommerceDashboard from './pages/admin/dashboard';
 
 const router = createBrowserRouter([
   {
@@ -47,19 +50,47 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin',
-    element: (
-      <AdminProtectedRoutes>
-        <></>
-      </AdminProtectedRoutes>
-    ),
+    element: <AdminPage />,
+    children: [
+      {
+        index: true,
+        element: (
+          <AdminProtectedRoutes>
+            <NotFound />
+          </AdminProtectedRoutes>
+        ),
+      },
+      {
+        path: 'dashboard',
+        element: (
+          <AdminProtectedRoutes>
+            <AdminEcommerceDashboard />
+          </AdminProtectedRoutes>
+        ),
+      },
+    ],
   },
   {
     path: '/user',
-    element: (
-      <PublicProtectedRoutes>
-        <></>
-      </PublicProtectedRoutes>
-    ),
+    element: <UserPage />,
+    children: [
+      {
+        index: true,
+        element: (
+          <PublicProtectedRoutes>
+            <NotFound />
+          </PublicProtectedRoutes>
+        ),
+      },
+      {
+        path: 'dashboard',
+        element: (
+          <PublicProtectedRoutes>
+            <></>
+          </PublicProtectedRoutes>
+        ),
+      },
+    ],
   },
   {
     path: '*',
