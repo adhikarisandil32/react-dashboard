@@ -5,6 +5,7 @@ import { config } from '../config/config';
 export interface AuthType {
   email: string;
   role: 'admin' | 'user';
+  name: string;
 }
 
 interface IAuth {
