@@ -1,5 +1,5 @@
 import { config } from '@src/config/config';
-import { useAuthStore } from '@src/stores/auth-store';
+import { useAuthStore, type AuthType } from '@src/stores/auth-store';
 import { ErrorCross } from '@src/svgs/error-cross';
 import { setLocalStorage } from '@src/utils/local-storage';
 import { useState } from 'react';
@@ -34,9 +34,10 @@ export default function LoginPageAdmin() {
           return;
         }
 
-        const authData = {
+        const authData: AuthType = {
           email: admin.email,
           role: admin.role as 'user' | 'admin',
+          name: admin.name,
         };
 
         setLocalStorage(config.authKey, JSON.stringify(authData));

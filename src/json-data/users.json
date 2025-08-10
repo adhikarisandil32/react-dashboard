@@ -2,6 +2,7 @@
   "adminUsers": [
     {
       "email": "admin@example.com",
+      "name": "Admin User",
       "password": "password123",
       "role": "admin"
     }
@@ -9,6 +10,7 @@
   "publicUsers": [
     {
       "email": "user@example.com",
+      "name": "Public User",
       "password": "password123",
       "role": "user"
     }

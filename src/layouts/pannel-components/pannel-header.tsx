@@ -1,7 +1,7 @@
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { usePannelContext } from '../pannel-layout';
 
-export default function PannelHeader() {
+export default function PannelLayoutPageHeader() {
   const {
     isMobileScreen,
     isMobilePannelOpen,
