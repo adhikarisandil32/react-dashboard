@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import PannelSidebar from './pannel-components/pannel-sidebar';
-import PannelHeader from './pannel-components/pannel-header';
 import { useMediaQuery } from 'usehooks-ts';
 import { useAppStyles } from '@src/stores/styles-store';
+import PannelLayoutPageHeader from './pannel-components/pannel-header';
+import SidebarMenu from '@src/components/commons/sidebar-menu';
+import { useAuthStore } from '@src/stores/auth-store';
 
 interface IPannelContext {
   isMobileScreen: boolean;
@@ -34,6 +36,8 @@ export default function PannelLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { auth } = useAuthStore();
+
   const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(true);
   const { styles } = useAppStyles();
   const isMobileScreen = useMediaQuery(
@@ -66,12 +70,12 @@ export default function PannelLayout({
       <div className="flex h-screen">
         <div>
           <PannelSidebar>
-            <></>
+            <SidebarMenu authRole={auth?.role} />
           </PannelSidebar>
         </div>
 
         <div className="space-y-4 p-3 w-full overflow-y-auto">
-          <PannelHeader />
+          <PannelLayoutPageHeader />
 
           <div>{children}</div>
         </div>
