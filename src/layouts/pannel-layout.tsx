@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import PannelSidebar from './pannel-components/pannel-sidebar';
 import PannelHeader from './pannel-components/pannel-header';
 import { useMediaQuery } from 'usehooks-ts';
@@ -45,6 +45,10 @@ export default function PannelLayout({
   const expandedSidebarWidth = '20rem';
   const collapsedSidebarWidth = '5.5rem';
   const collapsedScrollableSidebarWidth = '7.5rem';
+
+  useEffect(() => {
+    setIsSidebarExpanded(true);
+  }, [isMobileScreen]);
 
   return (
     <PannelContext.Provider
