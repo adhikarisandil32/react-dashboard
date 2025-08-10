@@ -68,6 +68,14 @@ const router = createBrowserRouter([
           </AdminProtectedRoutes>
         ),
       },
+      {
+        path: '*',
+        element: (
+          <AdminProtectedRoutes>
+            <NotFound />
+          </AdminProtectedRoutes>
+        ),
+      },
     ],
   },
   {
@@ -87,6 +95,14 @@ const router = createBrowserRouter([
         element: (
           <PublicProtectedRoutes>
             <></>
+          </PublicProtectedRoutes>
+        ),
+      },
+      {
+        path: '*',
+        element: (
+          <PublicProtectedRoutes>
+            <NotFound />
           </PublicProtectedRoutes>
         ),
       },
