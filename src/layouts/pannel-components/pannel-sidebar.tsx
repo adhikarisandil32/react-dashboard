@@ -1,7 +1,7 @@
-import { ChevronsUpDown } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { usePannelContext } from '../pannel-layout';
 import { useEffect, useRef, useState } from 'react';
+import SidebarHeader from '@src/components/commons/sidebar-header';
 
 /* Sidebar for desktop */
 function PannelSidebarDesktop({ children }: { children: React.ReactNode }) {
@@ -37,40 +37,7 @@ function PannelSidebarDesktop({ children }: { children: React.ReactNode }) {
       }}
       data-expanded={isSidebarExpanded}
     >
-      <div className="min-h-12 flex items-center justify-between cursor-pointer rounded-md p-1 px-2 hover:bg-gray-800">
-        <div className="flex items-center gap-2">
-          <div className="size-10 rounded-full border border-gray-200 grid place-items-center">
-            AU
-          </div>
-
-          <AnimatePresence>
-            {isSidebarExpanded && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <p className="font-bold">Admin User</p>
-                <p className="text-sm">dummy@email.com</p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        <AnimatePresence>
-          {isSidebarExpanded && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <ChevronsUpDown className="size-5" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+      <SidebarHeader />
 
       <div className="space-y-1.5">
         <div className="h-5">
@@ -132,22 +99,7 @@ function PannelSidebarMobile({ children }: { children: React.ReactNode }) {
             transition={{ duration: 0.3 }}
           >
             <div className="relative z-[75] space-y-4 p-4">
-              <div className="min-h-12 flex items-center justify-between cursor-pointer rounded-md p-1 px-2 hover:bg-gray-800">
-                <div className="flex items-center gap-2">
-                  <div className="size-10 rounded-full border border-gray-200 grid place-items-center">
-                    AU
-                  </div>
-
-                  <div>
-                    <p className="font-bold">Admin User</p>
-                    <p className="text-sm">dummy@email.com</p>
-                  </div>
-                </div>
-
-                <div>
-                  <ChevronsUpDown className="size-5" />
-                </div>
-              </div>
+              <SidebarHeader />
 
               <div className="space-y-1.5">
                 <div className="h-5">
