@@ -1,5 +1,6 @@
 import { usePannelContext } from '@src/layouts/pannel-layout';
 import { useAuthStore } from '@src/stores/auth-store';
+import { getProfilePath } from '@src/utils/functions';
 import { clearLocalStorage } from '@src/utils/local-storage';
 import { ChevronsUpDown, LogOut, User } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
@@ -67,7 +68,7 @@ function SidebarHeaderClickMenu({
 }: {
   setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const { setAuth } = useAuthStore();
+  const { auth, setAuth } = useAuthStore();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -89,7 +90,7 @@ function SidebarHeaderClickMenu({
   return (
     <div className="absolute top-[calc(100%+10px)] right-0 md:left-[calc(100%+10px)] md:top-0 border border-gray-400 bg-gray-50 rounded-md p-1 min-w-40">
       <Link
-        to={'/profile'}
+        to={getProfilePath(auth!.role) ?? '/'}
         className="inline-block px-3 py-2 hover:bg-gray-100 rounded-sm w-full text-left space-x-1 text-gray-800"
       >
         <User className="inline align-middle size-5" />
