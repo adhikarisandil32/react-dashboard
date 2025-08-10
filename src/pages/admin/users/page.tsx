@@ -6,7 +6,7 @@ import axios from 'axios';
 const API_URL = 'https://jsonplaceholder.typicode.com/users';
 
 export default function PublicUsersPage() {
-  const { isPending, data } = useQuery({
+  const { isPending, data, error } = useQuery({
     queryKey: [queryKeys.usersData],
     queryFn: async () => await axios.get(API_URL),
   });
@@ -54,6 +54,19 @@ export default function PublicUsersPage() {
             </tbody>
           ) : (
             <TableBody data={data?.data} />
+          )}
+
+          {error && (
+            <tbody>
+              <tr>
+                <td
+                  colSpan={7}
+                  className="h-24 text-center text-red-500"
+                >
+                  <span>Something went wrong</span>
+                </td>
+              </tr>
+            </tbody>
           )}
         </table>
       </div>
