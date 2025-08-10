@@ -15,6 +15,8 @@ import AdminEcommerceDashboard from './pages/admin/dashboard';
 import PublicUsersPage from './pages/admin/users/page';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PublicUserDashboard from './pages/user/dashboard';
+import AdminProfilePage from './pages/admin/profile';
+import UserProfilePage from './pages/user/profile';
 
 const router = createBrowserRouter([
   {
@@ -80,6 +82,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'profile',
+        element: (
+          <AdminProtectedRoutes>
+            <AdminProfilePage />
+          </AdminProtectedRoutes>
+        ),
+      },
+      {
         path: '*',
         element: (
           <AdminProtectedRoutes>
@@ -106,6 +116,14 @@ const router = createBrowserRouter([
         element: (
           <PublicProtectedRoutes>
             <PublicUserDashboard />
+          </PublicProtectedRoutes>
+        ),
+      },
+      {
+        path: 'profile',
+        element: (
+          <PublicProtectedRoutes>
+            <UserProfilePage />
           </PublicProtectedRoutes>
         ),
       },
